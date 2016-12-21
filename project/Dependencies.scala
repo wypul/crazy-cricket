@@ -10,6 +10,7 @@ object Dependencies {
     val sprayVer = "1.3.1"
     val jodaVer = "2.9.4"
     val akkaVer = "2.3.15"
+    val pbVer = "2.4.1"
   }
 
   import Versions._

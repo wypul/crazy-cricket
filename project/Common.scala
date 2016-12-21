@@ -1,5 +1,7 @@
+import sbt._
 import sbt.Keys._
 import sbtassembly.AssemblyPlugin.autoImport._
+import sbtprotobuf.{ProtobufPlugin => PB}
 
 object Common {
 
@@ -18,4 +20,13 @@ object Common {
     },
     test in assembly := {}
   )
+
+  val protoBufSettings =
+    PB.protobufSettings ++ Seq(
+      version in PB.protobufConfig := Dependencies.Versions.pbVer,
+      javaSource in PB.protobufConfig := sourceDirectory.value / "generated",
+      PB.runProtoc in PB.protobufConfig := { args =>
+        com.github.os72.protocjar.Protoc.runProtoc(s"-v${Dependencies.Versions.pbVer.replace(".", "")}" +: args.toArray)
+      }
+    )
 }
